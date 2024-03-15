@@ -59,13 +59,13 @@
 				</li>
 				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
 					<li>
-						<a href="<?= base_url('kategori') ?>" class="menu">
+						<a href="<?= base_url('users') ?>" class="menu">
 							<div class="menu__icon"> <i data-lucide="layout-grid"></i> </div>
 							<div class="menu__title"> Users </div>
 						</a>
 					</li>
 					<li>
-						<a href="<?= base_url('users') ?>" class="menu">
+						<a href="<?= base_url('kategori') ?>" class="menu">
 							<div class="menu__icon"> <i data-lucide="users"></i> </div>
 							<div class="menu__title"> Kategori </div>
 						</a>
