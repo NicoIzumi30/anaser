@@ -80,7 +80,7 @@ $autoload['libraries'] = array('database', 'session', 'email', 'form_validation'
 |
 */
 $autoload['drivers'] = array();
-
+$autoload['time_zone'] = date_default_timezone_set('Asia/Jakarta');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Helper Files

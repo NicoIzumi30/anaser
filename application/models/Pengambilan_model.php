@@ -4,20 +4,45 @@ class Pengambilan_model extends CI_Model
 {
     public function get_all()
     {
-        $this->db->select("pengambilan.*,users.nama,produk.nama_produk");
+        $this->db->select("pengambilan.*,users.nama,produk.nama_produk,produk.image,kategori.nama_kategori");
         $this->db->from("pengambilan");
 		$this->db->join("users", "users.id=pengambilan.user_id");
 		$this->db->join("produk", "produk.id=pengambilan.produk_id");
+		$this->db->join("kategori", "kategori.id=produk.kategori_id");
         return $this->db->get()->result_array();
     }
-    public function get_data($id)
-    {
-		$this->db->select("pengambilan.*,users.nama,produk.nama_produk");
+	public function search($keyword,$kategori){
+		$this->db->select("pengambilan.*,users.nama,produk.nama_produk,produk.image,kategori.nama_kategori");
         $this->db->from("pengambilan");
 		$this->db->join("users", "users.id=pengambilan.user_id");
 		$this->db->join("produk", "produk.id=pengambilan.produk_id");
+		$this->db->join("kategori", "kategori.id=produk.kategori_id");
+		$this->db->like('produk.nama_produk', $keyword);
+		if($kategori != '*'){
+			$this->db->where('produk.kategori_id', $kategori);
+		}
+        return $this->db->get()->result_array();
+	} 
+    public function get_data($id)
+    {
+		$this->db->select("pengambilan.*,users.nama,produk.nama_produk,produk.image,kategori.nama_kategori");
+        $this->db->from("pengambilan");
+		$this->db->join("users", "users.id=pengambilan.user_id");
+		$this->db->join("produk", "produk.id=pengambilan.produk_id");
+		$this->db->join("kategori", "kategori.id=produk.kategori_id");
         $this->db->where('pengambilan.id', $id);
         return $this->db->get()->row_array();
+    }
+	public function get_data_by_session()
+    {
+		$user_id = $this->session->userdata('user_id');
+		$this->db->select("pengambilan.*,users.nama,produk.nama_produk,produk.image,kategori.nama_kategori");
+        $this->db->from("pengambilan");
+		$this->db->join("users", "users.id=pengambilan.user_id");
+		$this->db->join("produk", "produk.id=pengambilan.produk_id");
+		$this->db->join("kategori", "kategori.id=produk.kategori_id");
+        $this->db->where('pengambilan.user_id', $user_id);
+        return $this->db->get()->result_array();
     }
     public function insert($data)
     {

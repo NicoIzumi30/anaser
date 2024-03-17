@@ -13,7 +13,7 @@
 									class="w-4 h-4 ml-0.5"></i> </div>
 						</div>
 					</div>
-					<div class="text-3xl font-medium leading-8 mt-6">Rp. 300,000</div>
+					<div class="text-3xl font-medium leading-8 mt-6">Rp. <?= number_format($harian) ?></div>
 					<div class="text-base text-slate-500 mt-1">Pendapatan Harian</div>
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 									class="w-4 h-4 ml-0.5"></i> </div>
 						</div>
 					</div>
-					<div class="text-3xl font-medium leading-8 mt-6">Rp. 10.300,000</div>
+					<div class="text-3xl font-medium leading-8 mt-6">Rp. <?= number_format($bulanan) ?></div>
 					<div class="text-base text-slate-500 mt-1">Pendapatan Bulanan</div>
 				</div>
 			</div>
@@ -64,7 +64,7 @@
 									class="w-4 h-4 ml-0.5"></i> </div>
 						</div>
 					</div>
-					<div class="text-3xl font-medium leading-8 mt-6">152</div>
+					<div class="text-3xl font-medium leading-8 mt-6"><?= $produk; ?></div>
 					<div class="text-base text-slate-500 mt-1">Total Produk</div>
 				</div>
 			</div>

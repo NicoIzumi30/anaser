@@ -10,6 +10,21 @@ class Product_model extends CI_Model
 		$this->db->join('penyimpanan', 'produk.penyimpanan_id = penyimpanan.id', 'left');
         return $this->db->get()->result_array();
     }
+	public function search($keyword,$kategori){
+		$this->db->select("produk.*, kategori.nama_kategori,penyimpanan.penyimpanan");
+        $this->db->from("produk");
+		$this->db->join('kategori', 'produk.kategori_id = kategori.id', 'left');
+		$this->db->join('penyimpanan', 'produk.penyimpanan_id = penyimpanan.id', 'left');
+		$this->db->like('nama_produk', $keyword);
+		if($kategori != '*'){
+			$this->db->where('kategori_id', $kategori);
+		}
+        return $this->db->get()->result_array();
+	} 
+	public function count_produk() {
+		$result = $this->db->get('produk')->num_rows();
+		return $result;
+	}
     public function get_data($id)
     {
         $this->db->select("produk.*, kategori.nama_kategori,penyimpanan.penyimpanan");
