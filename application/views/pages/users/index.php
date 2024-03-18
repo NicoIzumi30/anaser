@@ -1,6 +1,6 @@
 <!-- BEGIN: Content -->
 <style>
-	.phoneNumber{
+	.phoneNumber {
 		cursor: pointer;
 	}
 </style>
@@ -84,7 +84,7 @@
 							</div>
 						</td>
 						<td class="text-center">
-							<div class="font-medium whitespace-nowrap phoneNumber" data-phone="<?=$row['nomor_telp']?>">
+							<div class="font-medium whitespace-nowrap phoneNumber" data-phone="<?= $row['nomor_telp'] ?>">
 								<?= $row['nomor_telp'] ?>
 							</div>
 						</td>
@@ -135,18 +135,18 @@
 									<div class="modal-body">
 										<div class="mb-2">
 											<label for="regular-form-1" class="form-label">Nama Lengkap</label>
-											<input id="regular-form-1" type="text" value="<?= $row['nama'] ?>" name="nama" class="form-control"
-												placeholder="Nama Lengkap">
+											<input id="regular-form-1" type="text" value="<?= $row['nama'] ?>" name="nama"
+												class="form-control" placeholder="Nama Lengkap">
 										</div>
 										<div class="mb-2">
 											<label for="regular-form-1" class="form-label">Nama Konter</label>
-											<input id="regular-form-1" type="text" value="<?= $row['nama_konter'] ?>" name="konter" class="form-control"
-												placeholder="Nama Konter">
+											<input id="regular-form-1" type="text" value="<?= $row['nama_konter'] ?>"
+												name="konter" class="form-control" placeholder="Nama Konter">
 										</div>
 										<div class="mb-2">
 											<label for="regular-form-1" class="form-label">No Wa</label>
-											<input id="regular-form-1" type="number" value="<?= $row['nomor_telp'] ?>" name="no_telp" class="form-control"
-												placeholder="No Whatsapp">
+											<input id="regular-form-1" type="number" value="<?= $row['nomor_telp'] ?>"
+												name="no_telp" class="form-control" placeholder="No Whatsapp">
 										</div>
 									</div>
 									<div class="modal-footer">
@@ -175,11 +175,11 @@
 </div>
 <!-- END: Content -->
 <script>
-	$(".phoneNumber").click(function() {
-            var phoneNumber = $(this).data("phone");
-            var formattedPhoneNumber = phoneNumber.replace(/^0/, "62");
-            var whatsappLink = "https://wa.me/" + formattedPhoneNumber;
-			window.open(whatsappLink,'_blank');
-            // window.location.href = whatsappLink;
-        });
+	$(".phoneNumber").click(function () {
+		var phoneNumber = $(this).data("phone");
+		var formattedPhoneNumber = phoneNumber.replace(/^0/, "62");
+		var whatsappLink = "https://wa.me/" + formattedPhoneNumber;
+		window.open(whatsappLink, '_blank');
+		// window.location.href = whatsappLink;
+	});
 </script>

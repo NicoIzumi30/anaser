@@ -14,21 +14,26 @@
 			<div class="grid grid-cols-12 mb-4">
 				<div class="col-span-8 lg:col-span-4">
 					<form action="<?= base_url('product') ?>" method="post">
-					<div class="flex">
-						<select class="form-select w-full" name="kategori_id">
-							<option value="*">Semua</option>
-							<?php
-							foreach ($categories as $category) {
-								?>
-								<option value="<?= $category['id'] ?>" <?php if(isset($kategori_id) && $category['id'] == $kategori_id){ echo "selected";} ?>>
-									<?= $category['nama_kategori'] ?>
-								</option>
-							<?php } ?>
-						</select>
-						<input type="text" name="keyword" <?php if(isset($keyword)){ echo "value='$keyword'";} ?> class="form-input w-full ml-2" placeholder="Cari produk">
-						<button type="submit" class="btn btn-teal mx-2">Cari</button>
-					</div>
-				</form>
+						<div class="flex">
+							<select class="form-select w-full" name="kategori_id">
+								<option value="*">Semua</option>
+								<?php
+								foreach ($categories as $category) {
+									?>
+									<option value="<?= $category['id'] ?>" <?php if (isset ($kategori_id) && $category['id'] == $kategori_id) {
+										  echo "selected";
+									  } ?>>
+										<?= $category['nama_kategori'] ?>
+									</option>
+								<?php } ?>
+							</select>
+							<input type="text" name="keyword" <?php if (isset ($keyword)) {
+								echo "value='$keyword'";
+							} ?>
+								class="form-input w-full ml-2" placeholder="Cari produk">
+							<button type="submit" class="btn btn-teal mx-2">Cari</button>
+						</div>
+					</form>
 				</div>
 				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
 					<div class="col-span-4 lg:col-span-8 text-right">
@@ -153,7 +158,9 @@
 						<?php } ?>
 					</tr>
 				</thead>
-				<tbody class="bg-white divide-y divide-gray-200  <?php if($products == null){ echo 'text-center';} ?>">
+				<tbody class="bg-white divide-y divide-gray-200  <?php if ($products == null) {
+					echo 'text-center';
+				} ?>">
 					<?php
 					$no = 1;
 					foreach ($products as $product) {

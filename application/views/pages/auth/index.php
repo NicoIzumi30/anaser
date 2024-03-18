@@ -47,10 +47,10 @@
 					<div class="intro-x mt-2 text-slate-400 xl:hidden text-center">A few more clicks to sign in to your
 						account. Manage all your e-commerce accounts in one place</div>
 					<?php echo $this->session->flashdata('message'); ?>
-					<form action="<?=base_url('auth')?>" method="post">
+					<form action="<?= base_url('auth') ?>" method="post">
 						<div class="intro-x mt-8">
-							<input type="number" class="intro-x login__input form-control py-3 px-4 block" name="no_telp"
-								placeholder="No Telp">
+							<input type="number" class="intro-x login__input form-control py-3 px-4 block"
+								name="no_telp" placeholder="No Telp">
 							<input type="password" class="intro-x login__input form-control py-3 px-4 block mt-4"
 								name="password" placeholder="Password">
 						</div>

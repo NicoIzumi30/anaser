@@ -19,7 +19,7 @@ class Auth_model extends CI_Model
 		if ($this->session->userdata('user_role') == 'admin') {
 			return true;
 		} else {
-			return redirect('dashboard');
+			return redirect('product');
 		}
 	}
 	public function login($data)

@@ -13,12 +13,14 @@
 		<div class="container mx-auto my-3">
 			<div class="grid grid-cols-12 mb-4">
 				<div class="col-span-4">
-					<form action="<?=base_url('pendapatan')?>" method="post">
-					<div class="flex">
-						<input type="date" class="form-input w-full ml-2" <?php if(isset($tanggal)){ echo "value='$tanggal'";} ?> name="tanggal" placeholder="Tanggal">
-						<button type="submit"
-							class="bg-teal-400 hover:bg-teal-600 text-white font-bold rounded-md py-2 px-4 mx-2">Cari</button>
-					</div>
+					<form action="<?= base_url('pendapatan') ?>" method="post">
+						<div class="flex">
+							<input type="date" class="form-input w-full ml-2" <?php if (isset ($tanggal)) {
+								echo "value='$tanggal'";
+							} ?> name="tanggal" placeholder="Tanggal">
+							<button type="submit"
+								class="bg-teal-400 hover:bg-teal-600 text-white font-bold rounded-md py-2 px-4 mx-2">Cari</button>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -47,22 +49,37 @@
 							Harga</th>
 					</tr>
 				</thead>
-				<tbody class="bg-white divide-y divide-gray-200 <?php if($pendapatans == null){ echo 'text-center';} ?>">
-					<?php 
+				<tbody
+					class="bg-white divide-y divide-gray-200 <?php if ($pendapatans == null) {
+						echo 'text-center';
+					} ?>">
+					<?php
 					$no = 1;
 					$total = 0;
 					foreach ($pendapatans as $pendapatan) {
 						$total += $pendapatan['harga'];
-					?>
-					<tr>
-						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"><?= $no++;?> </td>
-						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"><?= $pendapatan['tanggal_pelunasan']; ?></td>
-						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"><?= $pendapatan['nama']; ?></td>
-						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"><?= $pendapatan['nama_produk']; ?></td>
-						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"><?= $pendapatan['stok']; ?></td>
-						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">Rp. <?= number_format($pendapatan['harga']) ?></td>
+						?>
+						<tr>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+								<?= $no++; ?>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+								<?= $pendapatan['tanggal_pelunasan']; ?>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+								<?= $pendapatan['nama']; ?>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+								<?= $pendapatan['nama_produk']; ?>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+								<?= $pendapatan['stok']; ?>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">Rp.
+								<?= number_format($pendapatan['harga']) ?>
+							</td>
 
-					</tr>
+						</tr>
 					<?php } ?>
 					<tr>
 						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">Total</td>
@@ -70,7 +87,9 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">Rp. <?= number_format($total) ?></td>
+						<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">Rp.
+							<?= number_format($total) ?>
+						</td>
 
 					</tr>
 				</tbody>

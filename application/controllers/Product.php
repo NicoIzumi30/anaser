@@ -20,14 +20,15 @@ class Product extends CI_Controller
 		$data['penyimpanan'] = $this->Penyimpanan_model->get_all();
 		$this->form_validation->set_rules('kategori_id', 'Kategori', 'required');
 		$this->form_validation->set_rules('keyword', 'Keyword', 'required');
-		if($this->form_validation->run() == false){
-			$data['products'] = $this->Product_model->get_all();	
-		}else{
-			$keyword = htmlspecialchars($this->input->post('keyword'));;
+		if ($this->form_validation->run() == false) {
+			$data['products'] = $this->Product_model->get_all();
+		} else {
+			$keyword = htmlspecialchars($this->input->post('keyword'));
+			;
 			$kategori = $this->input->post('kategori_id');
 			$data['products'] = $this->Product_model->search($keyword, $kategori);
 			$data['keyword'] = $keyword;
-			if($kategori != '*'){
+			if ($kategori != '*') {
 				$data['kategori_id'] = $kategori;
 			}
 		}
@@ -154,5 +155,23 @@ class Product extends CI_Controller
 	public function delete($id)
 	{
 		$this->Product_model->delete($id);
+	}
+
+	public function getListProduk()
+	{
+		$kategori_id = $this->input->get('kategori');
+		$products = $this->Product_model->get_produk_by_kategori($kategori_id);
+		$output = "";
+		$output .= "<option disabled selected>Pilih Produk</option>";
+		foreach ($products as $product) {
+			$output .= "<option value=" . $product["id"] . ">" . $product["nama_produk"] . "</option>";
+		}
+		$this->output->set_output($output);
+	}
+	public function getHarga()
+	{
+		$id = $this->input->get('produk');
+		$data = $this->Product_model->get_data($id);
+		$this->output->set_output($data['harga']);
 	}
 }

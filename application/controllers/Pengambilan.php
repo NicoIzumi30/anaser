@@ -45,6 +45,7 @@ class Pengambilan extends CI_Controller
 	}
 	public function add()
 	{
+		$this->Auth_model->midleware();
 		$this->form_validation->set_rules('user_id', 'User ID', 'required');
 		$this->form_validation->set_rules('produk_id', 'Produk ID', 'required');
 		$this->form_validation->set_rules('tanggal', 'Tanggal', 'required');

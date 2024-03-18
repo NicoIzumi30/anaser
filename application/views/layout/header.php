@@ -36,14 +36,14 @@
 			<a href="javascript:;" class="mobile-menu-toggler"> <i data-lucide="x-circle"
 					class="w-8 h-8 text-white transform -rotate-90"></i> </a>
 			<ul class="scrollable__content py-2">
-			<?php if ($this->session->userdata('user_role') == 'admin') { ?>
+				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
 
-				<li>
-					<a href="<?= base_url('dashboard') ?>" class="menu">
-						<div class="menu__icon"> <i data-lucide="gauge"></i> </div>
-						<div class="menu__title"> Dashboard</div>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url('dashboard') ?>" class="menu">
+							<div class="menu__icon"> <i data-lucide="gauge"></i> </div>
+							<div class="menu__title"> Dashboard</div>
+						</a>
+					</li>
 				<?php } ?>
 				<li>
 					<a href="<?= base_url('product') ?>" class="menu">
@@ -57,7 +57,25 @@
 						<div class="menu__title"> Pengambilan </div>
 					</a>
 				</li>
+				<li>
+					<a href="<?= base_url('bukukas') ?>" class="menu">
+						<div class="menu__icon"> <i data-lucide="book"></i> </div>
+						<div class="menu__title"> Buku Kas </div>
+					</a>
+				</li>
 				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
+					<li>
+						<a href="<?= base_url('bukukas/konter') ?>" class="menu">
+							<div class="menu__icon"> <i data-lucide="album"></i> </div>
+							<div class="menu__title"> Buku Kas konter</div>
+						</a>
+					</li>
+					<li>
+						<a href="<?= base_url('pelanggan') ?>" class="menu">
+							<div class="menu__icon"> <i data-lucide="inbox"></i> </div>
+							<div class="menu__title"> Kontak Pelanggan</div>
+						</a>
+					</li>
 					<li>
 						<a href="<?= base_url('users') ?>" class="menu">
 							<div class="menu__icon"> <i data-lucide="layout-grid"></i> </div>
@@ -103,62 +121,76 @@
 			</a>
 			<div class="side-nav__devider my-6"></div>
 			<ul>
-			<?php if ($this->session->userdata('user_role') == 'admin') { ?>
-				<li>
-					<a href="<?= base_url('dashboard') ?>"
-						class="side-menu <?php if ($title == 'Dashboard')
-							echo ('side-menu--active') ?>">
-							<div class="side-menu__icon"> <i data-lucide="gauge"></i> </div>
-							<div class="side-menu__title"> Dashboard </div>
-						</a>
-					</li>
-					<?php } ?>
+				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
 					<li>
-						<a href="<?= base_url('product') ?>"
-						class="side-menu <?php if ($title == 'Daftar Produk')
-							echo ('side-menu--active') ?>">
+						<a href="<?= base_url('dashboard') ?>" class="side-menu <?php if ($title == 'Dashboard')
+							  echo ('side-menu--active') ?>">
+								<div class="side-menu__icon"> <i data-lucide="gauge"></i> </div>
+								<div class="side-menu__title"> Dashboard </div>
+							</a>
+						</li>
+				<?php } ?>
+				<li>
+					<a href="<?= base_url('product') ?>" class="side-menu <?php if ($title == 'Daftar Produk')
+						  echo ('side-menu--active') ?>">
 							<div class="side-menu__icon"> <i data-lucide="shopping-bag"></i> </div>
 							<div class="side-menu__title">Daftar Product </div>
 						</a>
 					</li>
 					<li>
-						<a href="<?= base_url('pengambilan') ?>"
-						class="side-menu <?php if ($title == 'Pengambilan')
-							echo ('side-menu--active') ?>">
+						<a href="<?= base_url('pengambilan') ?>" class="side-menu <?php if ($title == 'Pengambilan')
+							  echo ('side-menu--active') ?>">
 							<div class="side-menu__icon"> <i data-lucide="clipboard-list"></i> </div>
 							<div class="side-menu__title"> Pengambilan </div>
 						</a>
 					</li>
+					<li>
+						<a href="<?= base_url('bukukas') ?>" class="side-menu <?php if ($title == 'Buku Kas')
+							  echo ('side-menu--active') ?>">
+							<div class="side-menu__icon"> <i data-lucide="book"></i> </div>
+							<div class="side-menu__title"> Buku Kas </div>
+						</a>
+					</li>
 				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
 					<li>
-						<a href="<?= base_url('kategori') ?>"
-							class="side-menu <?php if ($title == 'Kategori')
-								echo ('side-menu--active') ?>">
+						<a href="<?= base_url('bukukas/konter') ?>" class="side-menu <?php if ($title == 'Buku Kas Konter')
+							  echo ('side-menu--active') ?>">
+								<div class="side-menu__icon"> <i data-lucide="album"></i> </div>
+								<div class="side-menu__title"> Buku Kas Konter</div>
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url('pelanggan') ?>" class="side-menu <?php if ($title == 'Kontak Pelanggan')
+								  echo ('side-menu--active') ?>">
+								<div class="side-menu__icon"> <i data-lucide="inbox"></i> </div>
+								<div class="side-menu__title"> Kontak Pelanggan</div>
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url('kategori') ?>" class="side-menu <?php if ($title == 'Kategori')
+								  echo ('side-menu--active') ?>">
 								<div class="side-menu__icon"> <i data-lucide="layout-grid"></i> </div>
 								<div class="side-menu__title"> Kategori </div>
 							</a>
 						</li>
 						<li>
-							<a href="<?= base_url('users') ?>"
-							class="side-menu <?php if ($title == 'Users')
-								echo ('side-menu--active') ?>">
+							<a href="<?= base_url('users') ?>" class="side-menu <?php if ($title == 'Users')
+								  echo ('side-menu--active') ?>">
 								<div class="side-menu__icon"> <i data-lucide="users"></i> </div>
 								<div class="side-menu__title"> Users </div>
 							</a>
 						</li>
 						<li>
-							<a href="<?= base_url('pendapatan') ?>"
-							class="side-menu <?php if ($title == 'Pendapatan')
-								echo ('side-menu--active') ?>">
+							<a href="<?= base_url('pendapatan') ?>" class="side-menu <?php if ($title == 'Pendapatan')
+								  echo ('side-menu--active') ?>">
 								<div class="side-menu__icon"> <i data-lucide="wallet"></i> </div>
 								<div class="side-menu__title"> Pendapatan </div>
 							</a>
 						</li>
 				<?php } ?>
 				<li>
-					<a href="<?= base_url('profile') ?>"
-						class="side-menu <?php if ($title == 'Profile')
-							echo ('side-menu--active') ?>">
+					<a href="<?= base_url('profile') ?>" class="side-menu <?php if ($title == 'Profile')
+						  echo ('side-menu--active') ?>">
 							<div class="side-menu__icon"> <i data-lucide="user"></i> </div>
 							<div class="side-menu__title"> Profile </div>
 						</a>

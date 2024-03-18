@@ -2,7 +2,7 @@
 
 <script src="<?= base_url('assets') ?>/js/app.js"></script>
 <script src="<?= base_url('assets') ?>/js/scripta.js"></script>
-<script src="<?=base_url('assets/js/dataTables.js')?>"></script>
+<script src="<?= base_url('assets/js/dataTables.js') ?>"></script>
 <script src="<?= base_url('assets/js') ?>/dataTables.tailwindcss.js"></script>
 <script src="<?= base_url('assets/js') ?>/3.4.1.js"></script>
 
