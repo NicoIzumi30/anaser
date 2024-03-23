@@ -16,7 +16,113 @@
 	<link rel="stylesheet" href="<?= base_url('assets') ?>/css/app.css" />
 	<script src="<?= base_url('assets') ?>/js/sweetalert2.all.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<!--Regular Datatables CSS-->
+	<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+	<!--Responsive Extension Datatables CSS-->
+	<link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
+	<style>
+		.dataTables_wrapper select,
+		.dataTables_wrapper .dataTables_filter input {
+			color: #4a5568;
+			/*text-gray-700*/
+			padding-left: 1rem;
+			/*pl-4*/
+			padding-right: 1rem;
+			/*pl-4*/
+			padding-top: .5rem;
+			/*pl-2*/
+			padding-bottom: .5rem;
+			/*pl-2*/
+			line-height: 1.25;
+			/*leading-tight*/
+			border-width: 2px;
+			/*border-2*/
+			border-radius: .25rem;
+			border-color: #edf2f7;
+			/*border-gray-200*/
+			background-color: #edf2f7;
+			/*bg-gray-200*/
+		}
 
+		/*Row Hover*/
+		table.dataTable.hover tbody tr:hover,
+		table.dataTable.display tbody tr:hover {
+			background-color: #ebf4ff;
+			/*bg-indigo-100*/
+		}
+
+		/*Pagination Buttons*/
+		.dataTables_wrapper .dataTables_paginate .paginate_button {
+			font-weight: 700;
+			/*font-bold*/
+			border-radius: .25rem;
+			/*rounded*/
+			border: 1px solid transparent;
+			/*border border-transparent*/
+		}
+
+		/*Pagination Buttons - Current selected */
+		.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+			color: #fff !important;
+			/*text-white*/
+			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+			/*shadow*/
+			font-weight: 700;
+			/*font-bold*/
+			border-radius: .25rem;
+			/*rounded*/
+			background: #667eea !important;
+			/*bg-indigo-500*/
+			border: 1px solid transparent;
+			/*border border-transparent*/
+		}
+
+		/*Pagination Buttons - Hover */
+		.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+			color: #fff !important;
+			/*text-white*/
+			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+			/*shadow*/
+			font-weight: 700;
+			/*font-bold*/
+			border-radius: .25rem;
+			/*rounded*/
+			background: #667eea !important;
+			/*bg-indigo-500*/
+			border: 1px solid transparent;
+			/*border border-transparent*/
+		}
+
+		/*Add padding to bottom border */
+		table.dataTable.no-footer {
+			border-bottom: 1px solid #e2e8f0;
+			/*border-b-1 border-gray-300*/
+			margin-top: 0.75em;
+			margin-bottom: 0.75em;
+		}
+
+		/*Change colour of responsive icon*/
+		table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
+		table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
+			background-color: #667eea !important;
+			/*bg-indigo-500*/
+		}
+		.bg-red-500{
+			background-color: #ef4444 !important;
+		}
+		.bg-yellow-500{
+			background-color: #fde047 !important;
+		}
+		.bg-gray-600{
+			background-color: #4b5563 !important;
+		}
+		.bg-gray-700{
+			background-color: #3f3f46 !important;
+		}
+		.bg-gray-900{
+			background-color: #171717 !important;
+		}
+	</style>
 
 	<!-- END: CSS Assets-->
 </head>
@@ -144,13 +250,23 @@
 							<div class="side-menu__title"> Pengambilan </div>
 						</a>
 					</li>
+				<?php if ($this->session->userdata('user_role') != 'operator') { ?>
+					<li>
+							<a href="<?= base_url('jasa') ?>" class="side-menu <?php if ($title == 'Jasa')
+								  echo ('side-menu--active') ?>">
+								<div class="side-menu__icon"> <i data-lucide="refresh-ccw"></i> </div>
+								<div class="side-menu__title"> Jasa </div>
+							</a>
+						</li>
 					<li>
 						<a href="<?= base_url('bukukas') ?>" class="side-menu <?php if ($title == 'Buku Kas')
 							  echo ('side-menu--active') ?>">
-							<div class="side-menu__icon"> <i data-lucide="book"></i> </div>
-							<div class="side-menu__title"> Buku Kas </div>
-						</a>
-					</li>
+								<div class="side-menu__icon"> <i data-lucide="book"></i> </div>
+								<div class="side-menu__title"> Buku Kas </div>
+							</a>
+						</li>
+						
+				<?php } ?>
 				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
 					<li>
 						<a href="<?= base_url('bukukas/konter') ?>" class="side-menu <?php if ($title == 'Buku Kas Konter')
@@ -174,10 +290,17 @@
 							</a>
 						</li>
 						<li>
-							<a href="<?= base_url('users') ?>" class="side-menu <?php if ($title == 'Users')
+							<a href="<?= base_url('users') ?>" class="side-menu <?php if ($title == 'User Tuser')
 								  echo ('side-menu--active') ?>">
 								<div class="side-menu__icon"> <i data-lucide="users"></i> </div>
-								<div class="side-menu__title"> Users </div>
+								<div class="side-menu__title"> Tuser </div>
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url('users/operator') ?>" class="side-menu <?php if ($title == 'User Operator')
+								  echo ('side-menu--active') ?>">
+								<div class="side-menu__icon"> <i data-lucide="settings"></i> </div>
+								<div class="side-menu__title"> Operator </div>
 							</a>
 						</li>
 						<li>

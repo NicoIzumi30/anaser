@@ -22,6 +22,21 @@ class Auth_model extends CI_Model
 			return redirect('product');
 		}
 	}
+	public function midleware_operator()
+	{
+		if ($this->session->userdata('user_role') == 'admin' || $this->session->userdata('user_role') == 'operator') {
+			return true;
+		} else {
+			return redirect('product');
+		}
+	}
+	public function midleware_not_operator(){
+		if ($this->session->userdata('user_role') == 'admin' || $this->session->userdata('user_role') == 'tuser') {
+			return true;
+		} else {
+			return redirect('product');
+		}
+	} 
 	public function login($data)
 	{
 		$no_telp = $data['nomor_telp'];
@@ -31,7 +46,7 @@ class Auth_model extends CI_Model
 			if (password_verify($password, $user['password'])) {
 				$data_session = [
 					'user_id' => $user['id'],
-					'user_role' => 'tuser'
+					'user_role' => $user['role'],
 				];
 				$this->session->set_userdata($data_session);
 				return redirect('product');

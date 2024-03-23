@@ -1,17 +1,35 @@
 <style>
-	.h10r {
-		height: 10rem !important;
+	li {
+		font-size: 12px;
 	}
 </style>
 <div class="w-full max-w-full">
 	<div class="text my-5">
-		<h2 class="text-lg font-medium mr-auto">Daftar Seluruh Produk</h2>
+		<h2 class="text-lg font-medium mr-auto">Daftar Pengambilan</h2>
 		<hr class="mb-3">
 	</div>
 
 	<div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
 		<div class="container mx-auto">
-
+			<div class="modal-footer">
+				<button type="button" class="btn btn-teal mx-2" data-tw-toggle="modal"data-tw-target="#notifikasi"><i data-lucide="bell"></i></button>
+				<div id="notifikasi" class="modal" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="font-medium text-base mr-auto">
+								Notifikasi
+							</h2>
+						</div>
+						<div class="modal-body">
+							<?php foreach($notifikasi as $notif){ ?>
+								<li><?= $notif['pesan'] ?></li>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
 			<div class="grid grid-cols-12 gap-6 my-5">
 				<!-- BEGIN: Users Layout -->
 				<?php

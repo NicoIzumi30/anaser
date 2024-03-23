@@ -10,7 +10,7 @@
 	</div>
 
 	<div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-		<div class="container mx-auto my-3">
+		<div class="container mx-auto mt-3">
 			<div class="grid grid-cols-12 mb-4">
 				<div class="col-span-4">
 					<form action="<?= base_url('pendapatan') ?>" method="post">
@@ -19,7 +19,7 @@
 								echo "value='$tanggal'";
 							} ?> name="tanggal" placeholder="Tanggal">
 							<button type="submit"
-								class="bg-teal-400 hover:bg-teal-600 text-white font-bold rounded-md py-2 px-4 mx-2">Cari</button>
+								class="btn btn-teal">Cari</button>
 						</div>
 					</form>
 				</div>
@@ -27,7 +27,7 @@
 		</div>
 		<div class="overflow-x-auto container mx-auto">
 			<table class="table-auto min-w-full" id="example">
-				<thead class="thead-light">
+				<thead class="thead-light text-left">
 					<tr>
 						<th
 							class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">

@@ -44,6 +44,7 @@ class Pengambilan_model extends CI_Model
 		$this->db->join("kategori", "kategori.id=produk.kategori_id");
 		$this->db->where('pengambilan.user_id', $user_id);
 		return $this->db->get()->result_array();
+		// return $user_id;
 	}
 	public function insert($data)
 	{

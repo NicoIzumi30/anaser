@@ -27,6 +27,7 @@ class Product extends CI_Controller
 			;
 			$kategori = $this->input->post('kategori_id');
 			$data['products'] = $this->Product_model->search($keyword, $kategori);
+			$data['count'] = $this->Product_model->count_produk_by_kategori($keyword,$kategori);
 			$data['keyword'] = $keyword;
 			if ($kategori != '*') {
 				$data['kategori_id'] = $kategori;
@@ -75,6 +76,7 @@ class Product extends CI_Controller
 					'nama_produk' => htmlspecialchars($this->input->post('nama')),
 					'penyimpanan_id' => htmlspecialchars($this->input->post('penyimpanan')),
 					'kategori_id' => htmlspecialchars($this->input->post('kategori')),
+					'brand_id' => htmlspecialchars($this->input->post('brand_id')),
 					'stok' => htmlspecialchars($this->input->post('stok')),
 					'harga' => htmlspecialchars($this->input->post('harga')),
 					'image' => $uploadedFilenames,
@@ -133,6 +135,7 @@ class Product extends CI_Controller
 					'nama_produk' => htmlspecialchars($this->input->post('nama')),
 					'penyimpanan_id' => htmlspecialchars($this->input->post('penyimpanan')),
 					'kategori_id' => htmlspecialchars($this->input->post('kategori')),
+					'brand_id' => htmlspecialchars($this->input->post('brand_id')),
 					'stok' => htmlspecialchars($this->input->post('stok')),
 					'harga' => htmlspecialchars($this->input->post('harga')),
 					'image' => $uploadedFilenames,
@@ -159,8 +162,8 @@ class Product extends CI_Controller
 
 	public function getListProduk()
 	{
-		$kategori_id = $this->input->get('kategori');
-		$products = $this->Product_model->get_produk_by_kategori($kategori_id);
+		$brand_id = $this->input->get('brand');
+		$products = $this->Product_model->get_produk_by_brand($brand_id);
 		$output = "";
 		$output .= "<option disabled selected>Pilih Produk</option>";
 		foreach ($products as $product) {

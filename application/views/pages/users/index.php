@@ -5,7 +5,7 @@
 	}
 </style>
 <h2 class="intro-y text-lg font-medium mt-10">
-	Data Users
+	Data Tuser
 </h2>
 <div class="grid grid-cols-12 gap-6 mt-5">
 	<div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
@@ -25,11 +25,6 @@
 								placeholder="Nama Lengkap">
 						</div>
 						<div class="mb-2">
-							<label for="regular-form-1" class="form-label">Nama Konter</label>
-							<input id="regular-form-1" type="text" name="konter" class="form-control"
-								placeholder="Nama Konter">
-						</div>
-						<div class="mb-2">
 							<label for="regular-form-1" class="form-label">No Wa</label>
 							<input id="regular-form-1" type="number" name="no_telp" class="form-control"
 								placeholder="No Whatsapp">
@@ -40,6 +35,7 @@
 								placeholder="Password">
 						</div>
 					</div>
+					<input type="hidden" name="role" value="3">
 					<div class="modal-footer">
 						<button type="button" data-tw-dismiss="modal"
 							class="btn btn-outline-secondary w-24 mr-1">Batalkan</button>
@@ -56,7 +52,7 @@
 				<tr>
 					<th class="whitespace-nowrap">No</th>
 					<th class="whitespace-nowrap">Nama</th>
-					<th class="whitespace-nowrap">Nama Konter</th>
+					<!--<th class="whitespace-nowrap">Nama Konter</th>-->
 					<th class="text-center whitespace-nowrap">No Wa</th>
 					<th class="text-center whitespace-nowrap">Role</th>
 					<th class="text-center whitespace-nowrap">Aksi</th>
@@ -78,11 +74,11 @@
 								<?= $row['nama']; ?>
 							</div>
 						</td>
-						<td>
-							<div class="font-medium whitespace-nowrap">
-								<?= $row['nama_konter']; ?>
-							</div>
-						</td>
+						<!--<td>-->
+						<!--	<div class="font-medium whitespace-nowrap">-->
+						<!--		<?= $row['nama_konter']; ?>-->
+						<!--	</div>-->
+						<!--</td>-->
 						<td class="text-center">
 							<div class="font-medium whitespace-nowrap phoneNumber" data-phone="<?= $row['nomor_telp'] ?>">
 								<?= $row['nomor_telp'] ?>
@@ -138,11 +134,11 @@
 											<input id="regular-form-1" type="text" value="<?= $row['nama'] ?>" name="nama"
 												class="form-control" placeholder="Nama Lengkap">
 										</div>
-										<div class="mb-2">
-											<label for="regular-form-1" class="form-label">Nama Konter</label>
-											<input id="regular-form-1" type="text" value="<?= $row['nama_konter'] ?>"
-												name="konter" class="form-control" placeholder="Nama Konter">
-										</div>
+										<!--<div class="mb-2">-->
+										<!--	<label for="regular-form-1" class="form-label">Nama Konter</label>-->
+										<!--	<input id="regular-form-1" type="text" value="<?= $row['nama_konter'] ?>"-->
+										<!--		name="konter" class="form-control" placeholder="Nama Konter">-->
+										<!--</div>-->
 										<div class="mb-2">
 											<label for="regular-form-1" class="form-label">No Wa</label>
 											<input id="regular-form-1" type="number" value="<?= $row['nomor_telp'] ?>"

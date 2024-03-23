@@ -9,6 +9,7 @@ class Bukukas extends CI_Controller
 		$this->Auth_model->cek_session();
 		$this->load->model('Bukukas_model');
 		$this->load->model('Users_model');
+		$this->Auth_model->midleware_not_operator();
 	}
 
 	public function index()

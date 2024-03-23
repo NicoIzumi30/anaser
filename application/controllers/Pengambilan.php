@@ -12,12 +12,13 @@ class Pengambilan extends CI_Controller
 		$this->load->model('Users_model');
 		$this->load->model('Pendapatan_model');
 		$this->load->model('Kategori_model');
+		$this->load->model('Notifikasi_model');
 	}
 	public function index()
 	{
 		$data['title'] = 'Pengambilan';
 		$this->load->view('layout/header.php', $data);
-		if ($this->session->userdata('user_role') == 'admin') {
+		if ($this->session->userdata('user_role') == 'admin' || $this->session->userdata('user_role') == 'operator') {
 			$this->form_validation->set_rules('kategori_id', 'Kategori', 'required');
 			$this->form_validation->set_rules('keyword', 'Keyword', 'required');
 			if ($this->form_validation->run() == false) {
@@ -38,6 +39,7 @@ class Pengambilan extends CI_Controller
 			$data['users'] = $this->Users_model->get_all();
 			$this->load->view('pages/pengambilan/index.php', $data);
 		} else {
+			$data['notifikasi'] = $this->Notifikasi_model->get_all();
 			$data['pengambilans'] = $this->Pengambilan_model->get_data_by_session();
 			$this->load->view('pages/pengambilan/pengambilan_tuser.php', $data);
 		}
@@ -45,7 +47,7 @@ class Pengambilan extends CI_Controller
 	}
 	public function add()
 	{
-		$this->Auth_model->midleware();
+		$this->Auth_model->midleware_operator();
 		$this->form_validation->set_rules('user_id', 'User ID', 'required');
 		$this->form_validation->set_rules('produk_id', 'Produk ID', 'required');
 		$this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
@@ -62,6 +64,16 @@ class Pengambilan extends CI_Controller
 				'tanggal' => htmlspecialchars($this->input->post('tanggal')),
 				'harga' => $harga
 			];
+			$stok = $data_produk['stok'];
+			$nama_produk = $data_produk['nama_produk'];
+			$waktu = date('Y-m-d H:i');
+			$data_notifikasi = [
+				'user_id' => $data['user_id'],
+				'pesan' => $nama_produk.' telah ditambahkan di pengambilan ['.$waktu.']'
+			];
+			$this->Notifikasi_model->insert($data_notifikasi);
+			$stok_baru = $stok - 1;
+			$this->db->update('produk', ['stok' => $stok_baru], ['id' => $produk_id]);
 			$this->Pengambilan_model->insert($data);
 		}
 
@@ -73,13 +85,14 @@ class Pengambilan extends CI_Controller
 		$user_id = $data['user_id'];
 		$produk_id = $data['produk_id'];
 		$data_produk = $this->Product_model->get_data($produk_id);
-		$stok = $data_produk['stok'];
-		$stok_baru = $stok - 1;
-		$data_update = [
-			'stok' => $stok_baru
-		];
-		$this->db->update('produk', $data_update, ['id' => $produk_id]);
 		$harga = $data_produk['harga'];
+		$nama_produk = $data_produk['nama_produk'];
+		$waktu = date('Y-m-d H:i');
+		$data_notifikasi = [
+			'user_id' => $user_id,
+			'pesan' => $nama_produk.' telah di lunasi ['.$waktu.']'
+		];
+		$this->Notifikasi_model->insert($data_notifikasi);
 		$data_lunas = [
 			'user_id' => $user_id,
 			'produk_id' => $produk_id,
@@ -93,6 +106,20 @@ class Pengambilan extends CI_Controller
 	}
 	public function cancel($id)
 	{
+		$data = $this->Pengambilan_model->get_data($id);
+		$produk_id = $data['produk_id'];
+		$data_produk = $this->Product_model->get_data($produk_id);
+		$stok = $data_produk['stok'];
+		$nama_produk = $data_produk['nama_produk'];
+		$waktu = date('Y-m-d H:i');
+		$pesan = $nama_produk.' telah di cancel ['.$waktu.']';
+		$data_notifikasi = [
+			'user_id' => $data['user_id'],
+			'pesan' => $pesan
+		];
+		$this->Notifikasi_model->insert($data_notifikasi);
+		$stok_baru = $stok + 1;
+		$this->db->update('produk', ['stok' => $stok_baru], ['id' => $produk_id]);
 		$this->Pengambilan_model->delete($id);
 		$this->session->set_flashdata('flash', 'Di Batalkan');
 		return redirect('pengambilan');

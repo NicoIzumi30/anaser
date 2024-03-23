@@ -2,7 +2,7 @@
 
 
 <div class="grid grid-cols-12 mb-4">
-	<div class="col-span-12 lg:col-span-6 m-3">
+	<div class="col-span-12 lg:col-span-6 p-3">
 		<h2 class="intro-y text-lg font-medium mt-10">
 			Data Kategori
 		</h2>
@@ -126,10 +126,10 @@
 			Data Penyimpanan
 		</h2>
 		<div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-			<button class="btn btn-teal shadow-md mr-2" data-tw-toggle="modal" data-tw-target="#add">Tambah
+			<button class="btn btn-teal shadow-md mr-2" data-tw-toggle="modal" data-tw-target="#addPenyimpanan">Tambah
 				Penyimpanan</button>
 		</div>
-		<div id="add" class="modal" tabindex="-1" aria-hidden="true">
+		<div id="addPenyimpanan" class="modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -242,4 +242,153 @@
 		<!-- END: Data List -->
 	</div>
 
+	<div class="col-span-12 lg:col-span-6 p-3">
+		<h2 class="intro-y text-lg font-medium mt-10">
+			Data Brand
+		</h2>
+		<div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+			<button class="btn btn-teal shadow-md mr-2" data-tw-toggle="modal" data-tw-target="#addBrand">Tambah
+				Brand</button>
+		</div>
+		<div id="addBrand" class="modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="font-medium text-base mr-auto">Tambah Brand</h2>
+					</div>
+					<form action="<?= base_url('kategori/add_brand') ?>" method="post">
+						<div class="modal-body">
+							<div class="mb-2">
+								<label for="pos-form-1" class="form-label">Kategori</label>
+								<select class="form-select w-full" name="kategori_id" id="kategori">
+									<option disabled selected>Pilih Kategori</option>
+
+									<?php foreach ($kategori as $category) { ?>
+										<option value="<?= $category['id'] ?>">
+											<?= $category['nama_kategori'] ?>
+										</option>
+									<?php } ?>
+								</select>
+							</div>
+							<div class="mb-2">
+								<label for="regular-form-1" class="form-label">Nama Brand</label>
+								<input id="regular-form-1" type="text" name="nama" required class="form-control"
+									placeholder="Nama Brand">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-tw-dismiss="modal"
+								class="btn btn-outline-secondary w-24 mr-1">Batalkan</button>
+							<button type="submit" class="btn btn-teal shadow-md mr-2">Simpan</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- BEGIN: Data List -->
+		<div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+			<table class="table table-report -mt-2">
+				<thead>
+					<tr>
+						<th class="whitespace-nowrap">No</th>
+						<th class="whitespace-nowrap">Kategori</th>
+						<th class="whitespace-nowrap">Brand</th>
+						<th class="text-center whitespace-nowrap">Aksi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$no = 1;
+					foreach ($brand as $row) {
+						?>
+						<tr class="intro-x">
+							<td>
+								<div class="font-medium whitespace-nowrap">
+									<?= $no++ ?>
+								</div>
+							</td>
+							<td>
+								<div class="font-medium whitespace-nowrap">
+									<?= $row['nama_kategori']; ?>
+								</div>
+							</td>
+							<td>
+								<div class="font-medium whitespace-nowrap">
+									<?= $row['nama_brand']; ?>
+								</div>
+							</td>
+							<td class="">
+								<div class="flex justify-center items-center">
+									<a class="btn btn-danger shadow-md mr-2" href="javascript:;" data-tw-toggle="modal"
+										data-tw-target="#delete<?= $row['id'] ?>"> Hapus</a>
+									<button class="btn btn-teal shadow-md mr-2" data-tw-toggle="modal"
+										data-tw-target="#edit<?= $row['id'] ?>">Edit</button>
+								</div>
+							</td>
+						</tr>
+						<div id="delete<?= $row['id'] ?>" class="modal" tabindex="-1" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body p-0">
+										<div class="p-5 text-center">
+											<i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
+											<div class="text-3xl mt-5">Apa anda yakin?</div>
+											<div class="text-slate-500 mt-2">
+												Apakah Anda ingin menghapus data ini?
+												<br>
+												Proses ini tidak dapat dibatalkan.
+											</div>
+										</div>
+										<div class="px-5 pb-8 text-center">
+											<button type="button" data-tw-dismiss="modal"
+												class="btn btn-outline-secondary w-24 mr-1">Batalkan</button>
+											<a href="<?= base_url('kategori/delete_brand/' . $row['id']) ?>"
+												class="btn btn-danger w-24">Hapus</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="edit<?= $row['id'] ?>" class="modal" tabindex="-1" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h2 class="font-medium text-base mr-auto">Edit Kategori</h2>
+									</div>
+									<form action="<?= base_url('kategori/update_brand/' . $row['id']) ?>" method="post">
+										<div class="modal-body">
+											<div class="mb-2">
+												<label for="pos-form-1" class="form-label">Kategori</label>
+												<select class="form-select w-full" name="kategori_id" id="kategori">
+													<option disabled selected>Pilih Kategori</option>
+
+													<?php foreach ($kategori as $category) { ?>
+														<option value="<?= $category['id'] ?>"<?php if($row['kategori_id'] == $category['id']) echo('selected') ?> >
+															<?= $category['nama_kategori'] ?>
+														</option>
+													<?php } ?>
+												</select>
+											</div>
+											<div>
+												<label for="regular-form-1" class="form-label">Nama Brand</label>
+												<input id="regular-form-1" required type="text" name="nama"
+													class="form-control" value="<?= $row['nama_brand'] ?>"
+													placeholder="Nama Brand">
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" data-tw-dismiss="modal"
+												class="btn btn-outline-secondary w-24 mr-1">Batalkan</button>
+											<button type="submit" class="btn btn-teal shadow-md mr-2">Simpan</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+		<!-- END: Data List -->
+	</div>
 	<!-- END: Content -->

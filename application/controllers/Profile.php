@@ -42,7 +42,6 @@ class Profile extends CI_Controller
 		$id = $this->session->userdata('user_id');
 		$this->form_validation->set_rules('no_telp', 'No Telp', 'required');
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
-		$this->form_validation->set_rules('konter', 'Konter', 'required');
 		if ($this->form_validation->run() == false) {
 			$this->session->set_flashdata('flash-gagal', 'Di Update');
 			return redirect('profile');
@@ -50,7 +49,6 @@ class Profile extends CI_Controller
 			$data = [
 				'nama' => htmlspecialchars($this->input->post('nama')),
 				'nomor_telp' => htmlspecialchars($this->input->post('no_telp')),
-				'nama_konter' => htmlspecialchars($this->input->post('konter')),
 			];
 			$this->Users_model->update_profile($data, $id);
 		}

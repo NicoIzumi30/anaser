@@ -8,13 +8,15 @@ class Product_model extends CI_Model
 		$this->db->from("produk");
 		$this->db->join('kategori', 'produk.kategori_id = kategori.id', 'left');
 		$this->db->join('penyimpanan', 'produk.penyimpanan_id = penyimpanan.id', 'left');
+		$this->db->order_by('nama_produk', 'asc');
 		return $this->db->get()->result_array();
 	}
-	public function get_produk_by_kategori($kategori)
+	public function get_produk_by_brand($brand)
 	{
 		$this->db->select("*");
 		$this->db->from("produk");
-		$this->db->where('kategori_id', $kategori);
+		$this->db->where('brand_id', $brand);
+		$this->db->order_by('nama_produk', 'asc');
 		return $this->db->get()->result_array();
 	}
 	public function search($keyword, $kategori)
@@ -27,10 +29,18 @@ class Product_model extends CI_Model
 		if ($kategori != '*') {
 			$this->db->where('kategori_id', $kategori);
 		}
+		$this->db->order_by('nama_produk', 'asc');
 		return $this->db->get()->result_array();
 	}
 	public function count_produk()
 	{
+		$result = $this->db->get('produk')->num_rows();
+		return $result;
+	}
+	public function count_produk_by_kategori($keyword, $id)
+	{
+		$this->db->where('kategori_id', $id);
+		$this->db->like('nama_produk', $keyword);
 		$result = $this->db->get('produk')->num_rows();
 		return $result;
 	}

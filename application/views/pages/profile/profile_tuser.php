@@ -10,11 +10,6 @@
 						placeholder="Nama Lengkap">
 				</div>
 				<div class="mb-2">
-					<label for="regular-form-1" class="form-label">Nama Konter</label>
-					<input id="regular-form-1" type="text" name="konter" class="form-control"
-						value="<?= $user['nama_konter'] ?>" placeholder="Nama Konter">
-				</div>
-				<div class="mb-2">
 					<label for="regular-form-2" class="form-label">No Telp</label>
 					<input id="regular-form-2" type="number" name="no_telp" class="form-control"
 						value="<?= $user['nomor_telp'] ?>" placeholder="Nomor WA">

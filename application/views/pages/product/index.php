@@ -1,158 +1,130 @@
-<style>
-	.h10r {
-		height: 10rem !important;
-	}
-</style>
 <div class="w-full max-w-full">
 	<div class="text my-5">
 		<h2 class="text-lg font-medium mr-auto">Daftar Seluruh Produk</h2>
 		<hr class="mb-3">
 	</div>
 
-	<div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-		<div class="container mx-auto my-3">
-			<div class="grid grid-cols-12 mb-4">
-				<div class="col-span-8 lg:col-span-4">
-					<form action="<?= base_url('product') ?>" method="post">
-						<div class="flex">
-							<select class="form-select w-full" name="kategori_id">
-								<option value="*">Semua</option>
-								<?php
-								foreach ($categories as $category) {
-									?>
-									<option value="<?= $category['id'] ?>" <?php if (isset ($kategori_id) && $category['id'] == $kategori_id) {
-										  echo "selected";
-									  } ?>>
-										<?= $category['nama_kategori'] ?>
-									</option>
-								<?php } ?>
-							</select>
-							<input type="text" name="keyword" <?php if (isset ($keyword)) {
-								echo "value='$keyword'";
-							} ?>
-								class="form-input w-full ml-2" placeholder="Cari produk">
-							<button type="submit" class="btn btn-teal mx-2">Cari</button>
-						</div>
-					</form>
-				</div>
-				<?php if ($this->session->userdata('user_role') == 'admin') { ?>
-					<div class="col-span-4 lg:col-span-8 text-right">
-						<button type="button" class="btn btn-teal mx-2" data-tw-toggle="modal"
-							data-tw-target="#addProduk">Add</button>
-					</div>
-					<div id="addProduk" class="modal" tabindex="-1" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h2 class="font-medium text-base mr-auto">
-										Tambahkan Produk
-									</h2>
-								</div>
-								<form action="<?= base_url('product/add') ?>" method="post" enctype="multipart/form-data">
-									<div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
-										<div class="col-span-12">
-											<label for="pos-form-1" class="form-label">Nama Produk</label>
-											<input id="pos-form-2" type="text" required class="form-control flex-1"
-												name="nama" placeholder="Nama Produk">
-										</div>
-										<div class="col-span-12">
-											<label for="pos-form-1" class="form-label">Penyimpanan</label>
-											<select class="form-select w-full" required name="penyimpanan">
-												<?php
-												foreach ($penyimpanan as $row) {
-													?>
-													<option value="<?= $row['id'] ?>">
-														<?= $row['penyimpanan'] ?>
-													</option>
-												<?php } ?>
-											</select>
-										</div>
-										<div class="col-span-12">
-											<label for="pos-form-1" class="form-label">Kategori</label>
-											<select class="form-select w-full" required name="kategori">
-												<?php
-												foreach ($categories as $category) {
-													?>
-													<option value="<?= $category['id'] ?>">
-														<?= $category['nama_kategori'] ?>
-													</option>
-												<?php } ?>
-											</select>
-										</div>
-										<div class="col-span-12">
-											<label for="pos-form-2" class="form-label">Stok</label>
-											<input id="pos-form-2" type="number" required class="form-control flex-1"
-												name="stok" placeholder="Stok">
-										</div>
-										<div class="col-span-12">
-											<label for="pos-form-2" class="form-label">Harga</label>
-											<input id="pos-form-2" type="number" required class="form-control flex-1"
-												name="harga" placeholder="Harga">
-										</div>
-										<div class="col-span-12">
-											<label for="pos-form-2" class="form-label">Image Produk</label>
-											<div class="flex w-full justify-center">
-												<div id="multi-upload-button"
-													class="inline-flex items-center px-4 py-2 bg-gray-600 border border-gray-600 rounded-l font-semibold cursor-pointer text-sm text-white tracking-widest hover:bg-gray-500 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition ">
-													Click to browse
-												</div>
-												<div
-													class="w-4/12 lg:w-3/12 border border-gray-300 rounded-r-md flex items-center justify-between">
-													<span id="multi-upload-text" class="p-2"></span>
-													<div id="multi-upload-delete" class="hidden"
-														onclick="removeMultiUpload()">
-														<svg xmlns="http://www.w3.org/2000/svg"
-															class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512">
-															<path
-																d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
-														</svg>
-													</div>
-												</div>
-											</div>
-											<input type="file" id="multi-upload-input" required name="image[]"
-												class="hidden" multiple />
-										</div>
-										<div class="col-span-12">
-											<div id="images-container"></div>
-										</div>
-									</div>
-									<div class="modal-footer text-right">
-										<button type="button" data-tw-dismiss="modal"
-											class="btn btn-outline-secondary w-32 mr-1">Cancel</button>
-										<button type="submit" class="btn btn-teal">Selesai</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				<?php } ?>
+	<div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border pt-3">
+		<?php if ($this->session->userdata('user_role') == 'admin') { ?>
+			<div class="modal-footer mr-3">
+				<button type="button" class="btn btn-teal mx-2" data-tw-toggle="modal"
+					data-tw-target="#addProduk">Add</button>
 			</div>
-		</div>
 
-		<div class="overflow-x-auto container mx-auto">
+			<div id="addProduk" class="modal" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="font-medium text-base mr-auto">
+								Tambahkan Produk
+							</h2>
+						</div>
+						<form action="<?= base_url('product/add') ?>" method="post" enctype="multipart/form-data">
+							<div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+								<div class="col-span-12">
+									<label for="pos-form-1" class="form-label">Nama Produk</label>
+									<input id="pos-form-2" type="text" required class="form-control flex-1" name="nama"
+										placeholder="Nama Produk">
+								</div>
+								<div class="col-span-12">
+									<label for="pos-form-1" class="form-label">Penyimpanan</label>
+									<select class="form-select w-full" required name="penyimpanan">
+										<?php
+										foreach ($penyimpanan as $row) {
+											?>
+											<option value="<?= $row['id'] ?>">
+												<?= $row['penyimpanan'] ?>
+											</option>
+										<?php } ?>
+									</select>
+								</div>
+								<div class="col-span-12">
+									<label for="pos-form-1" class="form-label">Kategori</label>
+									<select class="form-select w-full" required name="kategori" id="kategori">
+										<?php
+										foreach ($categories as $category) {
+											?>
+											<option value="<?= $category['id'] ?>">
+												<?= $category['nama_kategori'] ?>
+											</option>
+										<?php } ?>
+									</select>
+								</div>
+								<div class="col-span-12">
+									<label for="pos-form-1" class="form-label">Brand</label>
+									<select class="form-select w-full" required name="brand_id" id="brand_id">
+										<option value="" disabled selected>Pilih Brand</option>
+									</select>
+								</div>
+								<div class="col-span-12">
+									<label for="pos-form-2" class="form-label">Stok</label>
+									<input id="pos-form-2" type="number" required class="form-control flex-1" name="stok"
+										placeholder="Stok">
+								</div>
+								<div class="col-span-12">
+									<label for="pos-form-2" class="form-label">Harga</label>
+									<input id="pos-form-2" type="number" required class="form-control flex-1" name="harga"
+										placeholder="Harga">
+								</div>
+								<div class="col-span-12">
+									<label for="pos-form-2" class="form-label">Image Produk</label>
+									<div class="flex w-full justify-center">
+										<div id="multi-upload-button"
+											class="inline-flex items-center px-4 py-2 bg-gray-600 border border-gray-600 rounded-l font-semibold cursor-pointer text-sm text-white tracking-widest hover:bg-gray-500 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition ">
+											Click to browse
+										</div>
+										<div
+											class="w-4/12 lg:w-3/12 border border-gray-300 rounded-r-md flex items-center justify-between">
+											<span id="multi-upload-text" class="p-2"></span>
+											<div id="multi-upload-delete" class="hidden" onclick="removeMultiUpload()">
+												<svg xmlns="http://www.w3.org/2000/svg"
+													class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512">
+													<path
+														d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
+												</svg>
+											</div>
+										</div>
+									</div>
+									<input type="file" accept="image/*" id="multi-upload-input" required name="image[]" class="hidden"
+										multiple />
+								</div>
+								<div class="col-span-12">
+									<div id="images-container"></div>
+								</div>
+							</div>
+							<div class="modal-footer text-right">
+								<button type="button" data-tw-dismiss="modal"
+									class="btn btn-outline-secondary w-32 mr-1">Cancel</button>
+								<button type="submit" class="btn btn-teal">Selesai</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		<?php } ?>
+		<div class="overflow-x-auto container mx-auto" id="recipients">
 			<table class="table-auto min-w-full" id="example">
 				<thead class="thead-light">
 					<tr>
-						<th
-							class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-							No</th>
-						<th
+						<th data-priority="1"
 							class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 							Nama Produk</th>
-						<th
-							class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-							Penyimpanan</th>
-						<th
+						<?php if ($this->session->userdata('user_role') == 'admin') { ?>
+							<th data-priority="2"
+								class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+								Penyimpanan</th>
+						<?php } ?>
+						<th data-priority="3"
 							class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 							Kategori</th>
-						<th
+						<th data-priority="4"
 							class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 							Stok</th>
-						<th
+						<th data-priority="5"
 							class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 							Harga</th>
 						<?php if ($this->session->userdata('user_role') == 'admin') { ?>
-							<th
+							<th data-priority="6"
 								class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-center">
 								Action</th>
 						<?php } ?>
@@ -166,34 +138,33 @@
 					foreach ($products as $product) {
 						?>
 						<tr>
-							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-								<?= $no++ ?>
-							</td>
-							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+							<td class="px-6 py-4 whitespace-no-wrap text-md leading-5 text-gray-500">
 								<?= $product['nama_produk'] ?>
 							</td>
-							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-								<?= $product['penyimpanan'] ?>
-							</td>
-							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+							<?php if ($this->session->userdata('user_role') == 'admin') { ?>
+								<td class="px-6 py-4 whitespace-no-wrap text-md leading-5 text-gray-500">
+									<?= $product['penyimpanan'] ?>
+								</td>
+							<?php } ?>
+							<td class="px-6 py-4 whitespace-no-wrap text-md leading-5 text-gray-500">
 								<?= $product['nama_kategori'] ?>
 							</td>
-							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+							<td class="px-6 py-4 whitespace-no-wrap text-md leading-5 text-gray-500">
 								<?= $product['stok'] ?>
 							</td>
-							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">Rp.
+							<td class="px-6 py-4 whitespace-no-wrap text-md leading-5 text-gray-500">Rp.
 								<?= number_format($product['harga']) ?>
 							</td>
 							<?php if ($this->session->userdata('user_role') == 'admin') { ?>
-								<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-center">
+								<td class="px-6 py-4 whitespace-no-wrap text-md leading-5 text-gray-500 text-center">
 									<div class="flex">
 										<a href="#" data-tw-toggle="modal" data-tw-target="#edit<?= $product['id'] ?>"
 											class="btn btn-teal rounded-full mr-2"><i data-lucide="pencil"></i></a>
 										<a href="#" data-tw-toggle="modal" data-tw-target="#delete<?= $product['id'] ?>"
-											class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full mr-2"><i
+											class="btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full mr-2"><i
 												data-lucide="trash-2"></i></a>
 										<a href="#" data-tw-toggle="modal" data-tw-target="#view<?= $product['id'] ?>"
-											class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full"><i
+											class="btn bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full"><i
 												data-lucide="eye"></i></a>
 									</div>
 								</td>
@@ -315,7 +286,7 @@
 															class="w-4/12 lg:w-3/12 border border-gray-300 rounded-r-md flex items-center justify-between">
 															<span id="multi-upload-text2" class="p-2"></span>
 															<div id="multi-upload-delete2" class="hidden"
-																onclick="removeMultiUpload()">
+																onclick="removeMultiUpload2()">
 																<svg xmlns="http://www.w3.org/2000/svg"
 																	class="fill-current text-red-700 w-3 h-3"
 																	viewBox="0 0 320 512">
@@ -325,7 +296,7 @@
 															</div>
 														</div>
 													</div>
-													<input type="file" name="image[]" id="multi-upload-input2" class="hidden"
+													<input type="file" name="image[]" accept="image/*" id="multi-upload-input2" class="hidden"
 														multiple />
 												</div>
 												<div class="col-span-12">
@@ -346,11 +317,42 @@
 
 				</tbody>
 			</table>
+
 		</div>
+		<!--/container-->
+
 	</div>
 
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	var $j = jQuery.noConflict();
+	$j(document).ready(function () {
+		function getBrand(kategori){
+			$j.ajax({
+				url: "<?= base_url('kategori/getListBrand') ?>",
+				method: "GET",
+				data: {
+					kategori: kategori
+				},
+				success: function (response) {
+					$j("#brand_id").html(response);
+				},
+				error: function () {
+					console.error("Error fetching HTML content");
+				}
+			});
+		}
+		var katVal =$j("#kategori").val();
+		getBrand(katVal);
+		$j("#kategori").change(function () {
+			var kategori = $j(this).val();
+			getBrand(kategori)
+		});
+	});
+</script>
+
 
 <script>
 	multiUploadButton = document.getElementById("multi-upload-button");
@@ -432,7 +434,7 @@
 		}
 	})
 
-	function removeMultiUpload() {
+	function removeMultiUpload2() {
 		imagesContainer2.innerHTML = '';
 		imagesContainer2.classList.remove("w-full", "grid", "grid-cols-1", "sm:grid-cols-2", "md:grid-cols-3", "lg:grid-cols-4", "gap-4");
 		multiUploadInput2.value = '';
